@@ -56,7 +56,7 @@ const signupTab = document.getElementById("signupTab");
 // Load Role UI
 // ==============================
 
-if (role === "admin") {
+ /*if (role === "admin") {
 
     welcomeTitle.textContent = "Welcome Admin";
 
@@ -99,6 +99,63 @@ if (role === "admin") {
 
 </div>
 `;
+
+}*/
+
+
+if (role === "admin") {
+
+    welcomeTitle.textContent = "Welcome Admin";
+
+    welcomeText.textContent =
+        "Manage verified placement records, analytics and student insights.";
+
+    loginHeading.textContent = "Admin Login";
+
+    // Hide Admin Sign Up
+    signupTab.style.display = "none";
+
+    // Always show Login Form
+    loginForm.style.display = "block";
+    signupForm.style.display = "none";
+
+    roleField.placeholder = "Admin ID";
+
+    loginIllustration.innerHTML = `
+    <div class="illustration-circle admin">
+
+        <i class="fa-solid fa-user-tie"></i>
+
+        <i class="fa-solid fa-clipboard-check badge"></i>
+
+    </div>
+    `;
+
+} else {
+
+    welcomeTitle.textContent = "Welcome Student";
+
+    welcomeText.textContent =
+        "Continue your placement preparation journey by logging in.";
+
+    loginHeading.textContent = "Student Login";
+
+    signupHeading.textContent = "Student Registration";
+
+    // Show Student Sign Up
+    signupTab.style.display = "block";
+
+    roleField.placeholder = "Roll Number";
+
+    loginIllustration.innerHTML = `
+    <div class="illustration-circle student">
+
+        <i class="fa-solid fa-chart-line"></i>
+
+        <i class="fa-solid fa-user-graduate person"></i>
+
+    </div>
+    `;
 
 }
 
@@ -247,7 +304,7 @@ window.location.href =
 // SIGNUP
 // ==============================
 
-signupForm.addEventListener("submit", async (e) => {
+/*signupForm.addEventListener("submit", async (e) => {
 
     e.preventDefault();
 
@@ -270,7 +327,42 @@ signupForm.addEventListener("submit", async (e) => {
                 auth,
                 email,
                 password
+            ); */
+
+   signupForm.addEventListener("submit", async (e) => {
+
+    e.preventDefault();
+
+    // Block Admin Signup
+    if (role === "admin") {
+
+        alert("Admin registration is disabled.");
+
+        return;
+
+    }
+
+    const fullName =
+        document.getElementById("fullName").value.trim();
+
+    const email =
+        document.getElementById("signupEmail").value.trim();
+
+    const roleValue =
+        document.getElementById("roleField").value.trim();
+
+    const password =
+        document.getElementById("signupPassword").value;
+
+    try {
+
+        const userCredential =
+            await createUserWithEmailAndPassword(
+                auth,
+                email,
+                password
             );
+
 
         const user = userCredential.user;
 
